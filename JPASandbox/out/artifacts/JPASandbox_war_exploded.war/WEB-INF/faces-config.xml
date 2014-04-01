@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+              version="2.0">
+
+
+    <navigation-rule>
+        <from-view-id> /*</from-view-id>
+                                         <navigation-case>
+                                             <from-action>#{login.login}</from-action>
+                                             <from-outcome>OrderList</from-outcome>
+                                             <to-view-id>OrderList.faces</to-view-id>
+                                         </navigation-case>
+        <navigation-case>
+            <from-action>#{login.login}</from-action>
+            <from-outcome>admin</from-outcome>
+            <to-view-id>workercreate.faces</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{login.logout}</from-action>
+            <from-outcome>logout</from-outcome>
+            <to-view-id>index.faces</to-view-id>
+        </navigation-case>
+            </navigation-rule>
+
+
+    <converter>
+        <converter-id>ClientConverter</converter-id>
+        <converter-class>converters.ClientConverter</converter-class>
+    </converter>
+</faces-config>

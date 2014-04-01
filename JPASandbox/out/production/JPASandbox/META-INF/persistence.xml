@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+
+    <persistence-unit name="NewPersistenceUnit">
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <jta-data-source>java:jboss/datasources/OracleDS</jta-data-source>
+        <class>models.Client</class>
+        <class>models.WorkingPlace</class>
+        <class>models.Job</class>
+        <class>models.Entry</class>
+        <class>models.Item</class>
+        <class>models.ItemType</class>
+        <class>models.Worker</class>
+        <class>models.Role</class>
+        <properties>
+                <!--<property name="hibernate.connection.url" value="jdbc:oracle:thin:@//localhost:1521/xe" />
+                <property name="hibernate.connection.driver_class" value="oracle.jdbc.OracleDriver" />
+                <property name="hibernate.connection.username" value="cleaner" />
+                <property name="hibernate.connection.password" value="cleaner" />
+                <property name="hibernate.show_sql" value="true" />
+                <property name="hibernate.format_sql" value="true" />-->
+                <property name="hbm2ddl.auto" value="update" />
+                <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
+            <property name="hibernate.connection.url" value="jdbc:oracle:thin:@//localhost:1521/xe"/>
+            <property name="hibernate.connection.driver_class" value="oracle.jdbc.OracleDriver"/>
+            <property name="hibernate.connection.username" value="cleaner"/>
+            <property name="hibernate.connection.password" value="cleaner"/>
+        </properties>
+
+    </persistence-unit>
+</persistence>

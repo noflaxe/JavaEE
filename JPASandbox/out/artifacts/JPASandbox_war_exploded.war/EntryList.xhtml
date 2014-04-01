@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: Nazar_Sheremeta
+  Date: 7/5/13
+  Time: 5:06 PM
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+    <title>Simple JSF Facelets page</title>
+</h:head>
+
+<h:body>
+    <p:dataTable var="object" paginator="TRUE"  value="#{orderBean.allItemTypes}">
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Name" />
+            </f:facet>
+            <h:outputText value="#{object.name}" />
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Gentle" />
+            </f:facet>
+            <h:outputText value="#{object.gentleObject}" />
+        </p:column>
+    </p:dataTable>
+</h:body>
+
+</html>

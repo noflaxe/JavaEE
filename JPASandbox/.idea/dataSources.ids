@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source source="LOCAL" name="Data Source" product="Oracle" version="Oracle Database 10g Express Edition Release 10.2.0.1.0 - Production" jdbc-version="11.2" driver-name="Oracle JDBC driver" driver-version="11.2.0.3.0" uuid="bc401376-a2d1-4c51-9c5f-20aae9e70c50">
+    <extra-name-characters>$#</extra-name-characters>
+    <identifier-quote-string>&quot;</identifier-quote-string>
+    <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
+    <jdbc-url>jdbc:oracle:thin:@//localhost:1521/xe</jdbc-url>
+    <user-name>cleaner</user-name>
+    <user-password>dfc9dfc6dfcfdfcbdfc4dfcfdfd8</user-password>
+    <schema-pattern>*.CLEANER</schema-pattern>
+    <default-schemas>*.CLEANER</default-schemas>
+    <libraries>
+      <library>
+        <url>jar://$PROJECT_DIR$/lib/ojdbc6-11.2.0.3.jar!/</url>
+      </library>
+      <library>
+        <url>file://$PROJECT_DIR$/lib/oracle-driver-license.txt</url>
+      </library>
+    </libraries>
+    <schema name="CLEANER" catalog=""/>
+    <table name="CLIENT" schema="CLEANER" catalog="" type="TABLE">
+      <column name="CLIENT_ID" sqlType="NUMBER" length="0" precision="-127" nullable="false" jdbcType="3"/>
+      <column name="NAME_CLIENT" sqlType="VARCHAR2" length="200" precision="0" nullable="true" jdbcType="12"/>
+      <column name="SURNAME_CLIENT" sqlType="VARCHAR2" length="200" precision="0" nullable="true" jdbcType="12"/>
+      <column name="ADDRESS" sqlType="VARCHAR2" length="200" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="CLIENT_PK" columns="CLIENT_ID"/>
+      <exported-key name="ENTRY_FK2" table="ENTRY" schema="CLEANER" catalog="" columns="CLIENT_ID"/>
+    </table>
+    <table name="ENTRY" schema="CLEANER" catalog="" type="TABLE">
+      <column name="ENTRY_ID" sqlType="NUMBER" length="0" precision="-127" nullable="false" jdbcType="3"/>
+      <column name="WORKER_ID" sqlType="NUMBER" length="0" precision="-127" nullable="true" jdbcType="3"/>
+      <column name="CLIENT_ID" sqlType="NUMBER" length="0" precision="-127" nullable="true" jdbcType="3"/>
+      <column name="URGENT_WORK" sqlType="NUMBER" length="0" precision="-127" nullable="true" jdbcType="3"/>
+      <column name="HARD_WORK" sqlType="NUMBER" length="0" precision="-127" nullable="true" jdbcType="3"/>
+      <column name="STATUS" sqlType="VARCHAR2" length="100" precision="0" nullable="true" jdbcType="12"/>
+      <column name="TIME" sqlType="TIMESTAMP(6)" length="11" precision="6" nullable="true" jdbcType="93"/>
+      <column name="PRICE" sqlType="NUMBER" length="0" precision="-127" nullable="true" jdbcType="3"/>
+      <primary-key name="ENTRY_PK" columns="ENTRY_ID"/>
+      <foreign-key name="ENTRY_FK2" columns="CLIENT_ID" ref-table="CLIENT" ref-schema="CLEANER" ref-catalog="" ref-columns="CLIENT_ID" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="ENTRY_FK" columns="WORKER_ID" ref-table="WORKER" ref-schema="CLEANER" ref-catalog="" ref-columns="WORKER_ID" update-rule="0" delete-rule="0" deferrability="2"/>
+      <exported-key name="ITEM_CON" table="ITEM" schema="CLEANER" catalog="" columns="ENTRY_ID"/>
+    </table>
+    <table name="ID_SEQ" schema="CLEANER" catalog="" type="SEQUENCE"/>
+    <table name="ITEM" schema="CLEANER" catalog="" type="TABLE">
+      <column name="ITEM_ID" sqlType="NUMBER" length="0" precision="-127" nullable="false" jdbcType="3"/>
+      <column name="ENTRY_ID" sqlType="NUMBER" length="0" precision="-127" nullable="true" jdbcType="3"/>
+      <column name="ITEMTYPE_ID" sqlType="NUMBER" length="0" precision="-127" nullable="true" jdbcType="3"/>
+      <column name="DIFFICULTY" sqlType="NUMBER" length="0" precision="-127" nullable="true" jdbcType="3"/>
+      <column name="SPOT_NUMBER" sqlType="NUMBER" length="0" precision="-127" nullable="true" jdbcType="3"/>
+      <primary-key name="ITEM_PK" columns="ITEM_ID"/>
+      <foreign-key name="ITEM_CON" columns="ENTRY_ID" ref-table="ENTRY" ref-schema="CLEANER" ref-catalog="" ref-columns="ENTRY_ID" update-rule="0" delete-rule="1" deferrability="2"/>
+      <foreign-key name="ITEM_FK" columns="ITEMTYPE_ID" ref-table="ITEMTYPE" ref-schema="CLEANER" ref-catalog="" ref-columns="ITEMTYPE_ID" update-rule="0" delete-rule="0" deferrability="2"/>
+    </table>
+    <table name="ITEMTYPE" schema="CLEANER" catalog="" type="TABLE">
+      <column name="ITEMTYPE_ID" sqlType="NUMBER" length="0" precision="-127" nullable="false" jdbcType="3"/>
+      <column name="NAME_ITEMTYPE" sqlType="VARCHAR2" length="200" precision="0" nullable="true" jdbcType="12"/>
+      <column name="GENTLEOBJECT_ITEMTYPE" sqlType="NUMBER" length="0" precision="-127" nullable="true" jdbcType="3"/>
+      <primary-key name="ITEMTYPE_PK" columns="ITEMTYPE_ID"/>
+      <exported-key name="ITEM_FK" table="ITEM" schema="CLEANER" catalog="" columns="ITEMTYPE_ID"/>
+    </table>
+    <table name="JOB" schema="CLEANER" catalog="" type="TABLE">
+      <column name="JOB_ID" sqlType="NUMBER" length="0" precision="-127" nullable="false" jdbcType="3"/>
+      <column name="POSITION_JOB" sqlType="VARCHAR2" length="150" precision="0" nullable="true" jdbcType="12"/>
+      <column name="SALARY" sqlType="NUMBER" length="0" precision="-127" nullable="true" jdbcType="3"/>
+      <primary-key name="JOB_PK" columns="JOB_ID"/>
+      <exported-key name="WORKER_FK2" table="WORKER" schema="CLEANER" catalog="" columns="JOB_ID"/>
+    </table>
+    <table name="ROLES" schema="CLEANER" catalog="" type="TABLE">
+      <column name="ROLE_ID" sqlType="NUMBER" length="0" precision="-127" nullable="false" jdbcType="3"/>
+      <column name="ROLE" sqlType="VARCHAR2" length="4000" precision="0" nullable="true" jdbcType="12"/>
+      <column name="LOGIN" sqlType="VARCHAR2" length="4000" precision="0" nullable="true" jdbcType="12"/>
+      <column name="PASSWORD" sqlType="VARCHAR2" length="4000" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="ROLES_PK" columns="ROLE_ID"/>
+      <exported-key name="WORKER_CON" table="WORKER" schema="CLEANER" catalog="" columns="ROLE_ID"/>
+    </table>
+    <table name="WORKER" schema="CLEANER" catalog="" type="TABLE">
+      <column name="WORKER_ID" sqlType="NUMBER" length="0" precision="-127" nullable="false" jdbcType="3"/>
+      <column name="WORKINGPLACE_ID" sqlType="NUMBER" length="0" precision="-127" nullable="false" jdbcType="3"/>
+      <column name="JOB_ID" sqlType="NUMBER" length="0" precision="-127" nullable="false" jdbcType="3"/>
+      <column name="NAME_WORKER" sqlType="VARCHAR2" length="40" precision="0" nullable="false" jdbcType="12"/>
+      <column name="SURNAME" sqlType="VARCHAR2" length="40" precision="0" nullable="false" jdbcType="12"/>
+      <column name="ADDRESS" sqlType="VARCHAR2" length="120" precision="0" nullable="true" jdbcType="12"/>
+      <column name="ROLE_ID" sqlType="NUMBER" length="0" precision="-127" nullable="true" jdbcType="3"/>
+      <primary-key name="PK_WORKER" columns="WORKER_ID"/>
+      <foreign-key name="FK_WORKER_JOB_WORKE_JOB" columns="JOB_ID" ref-table="JOB" ref-schema="CLEANER" ref-catalog="" ref-columns="JOB_ID" update-rule="0" delete-rule="1" deferrability="2"/>
+      <foreign-key name="WORKER_CON" columns="ROLE_ID" ref-table="ROLES" ref-schema="CLEANER" ref-catalog="" ref-columns="ROLE_ID" update-rule="0" delete-rule="1" deferrability="2"/>
+      <foreign-key name="FK_WORKER_WORKER_WO_WORKINGP" columns="WORKINGPLACE_ID" ref-table="WORKINGPLACE" ref-schema="CLEANER" ref-catalog="" ref-columns="WORKINGPLACE_ID" update-rule="0" delete-rule="1" deferrability="2"/>
+      <exported-key name="FK_ENTRY_WORKER_OR_WORKER" table="ENTRY" schema="CLEANER" catalog="" columns="WORKER_ID"/>
+      <index name="Job_worker_FK" unique="true" columns="JOB_ID"/>
+      <index name="Worker_WorkerPlace_FK" unique="true" columns="WORKINGPLACE_ID"/>
+    </table>
+    <table name="WORKINGPLACE" schema="CLEANER" catalog="" type="TABLE">
+      <column name="WORKINGPLACE_ID" sqlType="NUMBER" length="0" precision="-127" nullable="false" jdbcType="3"/>
+      <column name="ADDRESS_WORKINGPLACE" sqlType="VARCHAR2" length="150" precision="0" nullable="false" jdbcType="12"/>
+      <column name="WORKERCAPACITY_WORKINGPLACE" sqlType="NUMBER" length="0" precision="-127" nullable="true" jdbcType="3"/>
+      <primary-key name="WORKINGPLACE_PK" columns="WORKINGPLACE_ID"/>
+      <exported-key name="WORKER_FK" table="WORKER" schema="CLEANER" catalog="" columns="WORKINGPLACE_ID"/>
+    </table>
+  </data-source>
+</component>

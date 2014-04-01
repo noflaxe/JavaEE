@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+        >
+
+
+
+<h:head>
+    <title>Simple JSF Facelets page</title>
+</h:head>
+
+<h:body>
+    <ui:composition template="/templates/layout.xhtml">
+        <ui:define name="content">
+    <h:form>
+        <p:wizard flowListener="#{orderBean.onFlowProcess}">
+            <p:tab id="name" title="Your name">
+                <!--  <p:growl id="growl" sticky="true" showDetail="true"/>-->
+
+                <h:messages errorClass="error"/>
+
+                <p:panel header="Personal Details">
+                    <h:panelGrid columns="2" columnClasses="label, value" styleClass="grid">
+                        <h:outputText value="Firstname: *"/>
+                        <p:inputText required="true" label="Firstname"
+                                     value="#{orderBean.name}"/>
+
+                        <h:outputText value="Lastname: *"/>
+                        <p:inputText required="true" label="Lastname"
+                                     value="#{orderBean.surname}"/>
+
+                    </h:panelGrid>
+
+                </p:panel>
+
+            </p:tab>
+
+            <p:tab id="client" title="Identify yourself">
+
+
+                <p:dialog id="basicDialog" header="More information" widgetVar="dlg1" resizable="false" modal="true">
+                    <h:panelGrid columns="1">
+                        <h:outputText value="Provide us with more information!" />
+                        <h:outputText value="Your name: #{orderBean.name}" />
+                        <h:outputText value="Your surname: #{orderBean.surname}" />
+                        <h:outputText value="Your Address: "/>
+                        <p:inputText value="#{orderBean.address}"/>
+                        <p:commandButton value="Submit"  oncomplete="dlg1.hide() " actionListener="#{orderBean.createClient}" update="out1"/>
+                    </h:panelGrid>
+                </p:dialog>
+
+
+                  <p:panel header="Find yourself in the list below">
+                      <h:panelGrid columns="2" columnClasses="label, value" styleClass="grid">
+                        <h:outputLabel value="Identify yourself:"/>
+                        <p:selectOneMenu id="out1" value="#{orderBean.client}" effect="fade"
+                                            converter="ClientConverter">
+                            <f:selectItems value="#{orderBean.byNameSurname}" var="type"
+                                           itemLabel="#{type.nameClient} #{type.surnameClient}, #{type.address}" itemValue="#{nameClient}"/>
+
+                               </p:selectOneMenu>
+                          <p:commandButton id="basic" value="I cant find myself in the list!" onclick="dlg1.show()" type="button" />
+                      </h:panelGrid>
+                </p:panel>
+            </p:tab>
+
+
+            <p:tab id="itemtype" title="Select your item type">
+                <p:panel header="What is your item?">
+                    <h:panelGrid columns="2" columnClasses="label, value" styleClass="grid">
+                        <h:outputLabel value="Select your item type?:"/>
+
+
+                        <p:selectOneMenu id="anotherPanel" value="#{orderBean.itemType}" effect="fade"
+                                            converter="ItemTypeConverter">
+                             <f:selectItems value="#{orderBean.allItemTypes}" var="type2"
+                                           itemLabel="#{type2.name}" itemValue="#{name}"/>
+                                                                            </p:selectOneMenu>
+
+                    </h:panelGrid>
+                </p:panel>
+            </p:tab>
+
+            <p:tab id="additional" title="Additional Services">
+                <p:panel header="Select additional services">
+                    <h:panelGrid columns="2" columnClasses="label, value" styleClass="grid">
+                        <h:outputText value="Urgent work?(40% additional fee)" />
+                        <p:selectBooleanButton id="value3" value="#{orderBean.urgent}" onLabel="Yes"
+                                               offLabel="No" onIcon="ui-icon-check" offIcon="ui-icon-close" />
+
+                        <h:outputText value="Extra hard cleaning?(50% additional fee)" />
+                        <p:selectBooleanButton id="value2" value="#{orderBean.extra}" onLabel="Yes"
+                                               offLabel="No" onIcon="ui-icon-check" offIcon="ui-icon-close" />
+
+                    </h:panelGrid>
+
+                </p:panel>
+                    </p:tab>
+
+            <p:tab id="confirm" title="Confirmation">
+                <p:panel header="Confirm your data">
+                    <h:panelGrid columns="1">
+                    <h:outputText value="Your name: #{orderBean.client.nameClient}" />
+                    <h:outputText value="Your surname: #{orderBean.client.surnameClient}" />
+                    <h:outputText value="Your address: #{orderBean.client.address}" />
+                    <h:outputText value="Your item: #{orderBean.itemType.name}" />
+                        <p:commandButton value="Create" action="#{orderBean.submitOrder}" immediate="true"
+                                         oncomplete="alert('Order created! Proceed with your item to our Worker'),
+                                      window.location.href = 'index.faces'"/>
+                    </h:panelGrid>
+                </p:panel>
+                    </p:tab>
+
+
+        </p:wizard>
+
+
+
+    </h:form>
+            </ui:define>
+           </ui:composition>
+</h:body>
+</html>

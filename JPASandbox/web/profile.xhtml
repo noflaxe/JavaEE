@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: noflaxe
+  Date: 20.07.13
+  Time: 14:26
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:c="http://java.sun.com/jsp/jstl/core"
+        >
+
+<h:head>
+    <title>Simple JSF Facelets page</title>
+</h:head>
+<ui:composition template="/templates/layout.xhtml">
+    <ui:define name="content">
+<h:body>
+    <h:form id="form">
+        <p:growl id="messages" showDetail="true"/>
+        <p:fieldset id="firstField" legend="Welcome to your profile!">
+            <h:panelGrid columns="2" cellpadding="10">
+                 <h:outputText value="Your name: " />
+                 <h:outputText value=" #{login.worker.name}" />
+                <h:outputText value="Surname: " />
+                <h:outputText value=" #{login.worker.surname}" />
+                <h:outputText value="Your address: " />
+                <h:outputText value=" #{login.worker.address}" />
+                <h:outputText value="Position: " />
+                <h:outputText value=" #{login.worker.job.position}" />
+                <h:outputText value="Working place: " />
+                <h:outputText value=" #{login.worker.workingPlace.address}" />
+                 </h:panelGrid>
+
+            <p:panelGrid  id="panel">
+
+                <f:facet name="header">
+                    <p:row>
+                        <p:column  colspan="7">People you work with</p:column>
+                        <p:spacer height="11"/>
+                    </p:row>
+                    <p:row>
+                        <p:column>Name</p:column>
+                        <p:column>Surname</p:column>
+                        <p:column>Position</p:column>
+                    </p:row>
+                </f:facet>
+               <c:forEach items="#{login.workingWith}" var="o">
+                             <p:row>
+                    <p:column>#{o.name}</p:column>
+                    <p:column>#{o.surname}</p:column>
+                    <p:column>#{o.job.position}</p:column>
+                               </p:row>
+                </c:forEach>
+            </p:panelGrid>
+            <h:panelGrid columns="2" id="panelpw">
+                <h:outputText value="Enter old password" />
+                <p:inputText type="password" value="#{profile.firstPwEntry}" />
+                <h:outputText value="Enter old password again" />
+                <p:inputText type="password" value="#{profile.secondPwEntry}" />
+                <h:outputText value="Enter new password" />
+                <p:inputText type="password" value="#{profile.newPw}" />
+                <p:commandButton action="#{profile.changePassword(login.worker)}" />
+             </h:panelGrid>
+        </p:fieldset>
+              </h:form>
+
+
+
+
+
+
+
+</h:body>
+    </ui:define>
+</ui:composition>
+
+</html>

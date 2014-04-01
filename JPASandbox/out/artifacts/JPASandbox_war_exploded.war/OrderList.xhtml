@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: Nazar_Sheremeta
+  Date: 7/8/13
+  Time: 4:49 PM
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+        >
+<h:head>
+
+    <title>Simple JSF Facelets page</title>
+</h:head>
+
+<h:body>
+    <ui:composition template="/templates/layout.xhtml">
+    <ui:define name="content">
+        <h:form id="firstForm">
+            <p:growl id="messages" showDetail="true" />
+
+            <p:dataTable id="table" var="object" value="#{orderView.allEntries}" paginator="true"  rows="10" lazy="true"
+                    pageLinks="">
+
+            <p:column id="nameTable" headerText="Name"  >
+              <h:outputText value="#{object.client.nameClient}" />
+        </p:column>
+
+
+        <p:column id="surnameTable" headerText="Surname">
+               <h:outputText value="#{object.client.surnameClient}" />
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Item Type" />
+            </f:facet>
+            <h:outputText value="#{object.item.itemType.name}" />
+        </p:column>
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Date" />
+            </f:facet>
+            <h:outputText value="#{object.time.getTime()}" >
+                <f:convertDateTime pattern="dd.MM.yyyy" />
+            </h:outputText>
+        </p:column>
+        <p:column headerText="Status">
+          #{object.status}
+          </p:column>
+
+
+        <p:column style="width:4%">
+
+
+
+            <p:commandButton  id="firstButton" icon="ui-icon-pencil" action="#{orderView.setSelectedEntry(object)}" oncomplete="dlg.show()"
+                 update=":editDialog" />
+
+             <p:commandButton id="deleteButton" action="#{orderView.delete(object)}" icon="ui-icon-trash" onclick="return confirm('Are you sure?')">
+             </p:commandButton>
+
+
+
+
+
+        </p:column>
+
+
+
+    </p:dataTable>
+    </h:form>
+
+        <p:dialog id="editDialog" header="Edit Dialog" widgetVar="dlg" resizable="false" modal="true">
+            <h:form>
+            <p:panelGrid style="margin-top:20px" >
+                <f:facet name="header">
+                    <p:row>
+                        <p:column colspan="7">Order information</p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="2">Client name </p:column>
+                        <p:column colspan="2">Surname</p:column>
+                        <p:column colspan="2">Address</p:column>
+                    </p:row>
+                </f:facet>
+                <p:row>
+                    <p:column colspan="2">  #{orderView.selectedEntry.client.nameClient} </p:column>
+                    <p:column colspan="2">  #{orderView.selectedEntry.client.surnameClient} </p:column>
+                    <p:column colspan="2">  #{orderView.selectedEntry.client.address} </p:column>
+                </p:row>
+                <p:row>
+                    <p:column style="text-align: center" styleClass="ui-widget-header" colspan="6">
+                        Item information
+                    </p:column>
+
+                </p:row>
+                     <p:row>
+                             </p:row>
+            </p:panelGrid>
+            <h:panelGrid columns="1">
+                <h:outputText value="Spot number" />
+                <p:inputText  label="SpotNumber"  required="true" id="spot"
+                              value="#{orderView.spotNumber}" />
+                <h:outputText value="Difficulty(1-10)" />
+                <p:inputText label="Difficulty"   required="true" id="diff"
+                             value="#{orderView.difficulty}" />
+            </h:panelGrid>
+            <h:panelGrid columns="2">
+
+
+            </h:panelGrid>
+                <p:panelGrid style="margin-top:20px" >
+                <f:facet name="header">
+                <p:row>
+                    <p:column colspan="7">Order information</p:column>
+                </p:row>
+                <p:row>
+                    <p:column colspan="3">Price</p:column>
+                    <p:column colspan="3">Discount</p:column>
+                    <p:column colspan="3">Real price</p:column>
+                </p:row>
+                    </f:facet>
+                    <p:row>
+                        <p:column colspan="3">  <h:outputText id="priceShower" value="#{orderView.selectedEntry.price} $ " /></p:column>
+                        <p:column colspan="3"> <h:outputText id="discount" value="#{orderView.discount} % " /> </p:column>
+                        <p:column colspan="3"> <h:outputText id="realPrice" value="#{orderView.selectedEntry.price*(100-orderView.discount)/100.0} " /> </p:column>
+                            </p:row>
+                </p:panelGrid>
+                <p:commandButton id="thirdButton" value="Calculate"  action="#{orderView.calculate(orderView.selectedEntry)}" update="priceShower,realPrice,discount"/>
+                <p:commandButton id="secondButton" value="Submit"  update=":firstForm:table" oncomplete="dlg.hide()" actionListener="#{orderView.update(orderView.selectedEntry)}"/>
+
+                     </h:form>
+        </p:dialog>
+    </ui:define>
+    </ui:composition>
+</h:body>
+
+</html>

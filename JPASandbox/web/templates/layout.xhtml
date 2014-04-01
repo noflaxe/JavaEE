@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+        >
+<h:head>
+    <link rel="stylesheet" href="screen2.css" type="text/css" media="screen" />
+    <title>Cleaner systems</title>
+  </h:head>
+<h:body>
+
+
+    <div id="wrapper">
+
+        <div id="header-container">
+            <ui:insert name="header" >
+                <ui:include src="/templates/header.xhtml" />
+            </ui:insert>
+        </div>
+
+        <div id="content-container">
+            <ui:insert name="content" >
+
+            </ui:insert>
+        </div>
+
+        <div id="footer-container">
+            <ui:insert name="footer" >
+                <ui:include src="/templates/footer.xhtml" />
+            </ui:insert>
+        </div>
+
+    </div>
+
+
+
+    <!--<p:layout fullPage="true">-->
+    <!--<p:layoutUnit position="north" size="175" resizable="false" closable="false" collapsible="false">-->
+    <!--<ui:include src="/templates/common/header.xhtml" />-->
+
+    <!--</p:layoutUnit>-->
+
+    <!--<p:layoutUnit position="west"  header="Menu" resizable="false" closable="false" collapsible="false" >-->
+    <!--<ui:include src="" />-->
+    <!--</p:layoutUnit>-->
+
+
+    <!--<p:layoutUnit position="south" size="175" resizable="false" closable="false" collapsible="false">-->
+    <!--<ui:include src="/templates/common/footer.xhtml" />-->
+    <!--</p:layoutUnit>-->
+
+    <!--<p:layoutUnit position="center">-->
+    <!--<ui:insert name="content">Put default content here, if any.</ui:insert>-->
+    <!--</p:layoutUnit>-->
+    <!--</p:layout>-->
+</h:body>
+</html>

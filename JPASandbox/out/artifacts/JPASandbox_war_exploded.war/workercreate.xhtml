@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: noflaxe
+  Date: 21.07.13
+  Time: 13:27
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+        >
+<h:head>
+    <title>Simple JSF Facelets page</title>
+</h:head>
+
+<h:body>
+    <ui:composition template="/templates/layout.xhtml">
+    <ui:define name="content">
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true"/>
+            <p:dataTable var="object" value="#{workerEdit.workers}" id="workerList" editable="true"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
+                <p:ajax event="rowEdit" listener="#{workerEdit.onEdit}" update=":form:messages" />
+                <p:ajax event="rowEditCancel" listener="#{workerEdit.onCancel}" update=":form:messages" />
+                <f:facet name="header">
+                    <p:commandButton value="Create worker" oncomplete="dlg3.show()" />
+                </f:facet>
+
+                <p:column headerText="Name" style="width:20%">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{object.name}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{object.name}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Surname" style="width:20%">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{object.surname}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{object.surname}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Address" style="width:20%">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{object.address}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{object.address}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column style="width:6%">
+                    <p:rowEditor />
+                </p:column>
+                <p:column style="width:6%">
+                    <p:commandButton id="deleteButton" action="#{workerEdit.delete(object)}" icon="ui-icon-trash" onclick="return confirm('Are you sure?')" update=":form:messages"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+        <p:dialog header="Create worker" id="dialog" widgetVar="dlg3" modal="true">
+            <h:form id="form2">
+            <h:panelGrid columns="2">
+                <h:outputText value="Name" />
+                <p:inputText  label="Name"  required="true" id="name"
+                              value="#{workerEdit.newWorker.name}" />
+                <h:outputText value="Surname" />
+                <p:inputText label="Password"   required="true" id="sur"
+                             value="#{workerEdit.newWorker.surname}" />
+                <h:outputText value="Address" />
+                <p:inputText label="Address"   required="true" id="address"
+                             value="#{workerEdit.newWorker.address}" />
+
+                <h:outputText value="Login" />
+                <p:inputText label="Login"   required="true" id="login"
+                             value="#{workerEdit.newWorker.role.login}" />
+                <h:outputText value="Password" />
+                <p:inputText label="Password"  type="password" required="true" id="pw"
+                             value="#{workerEdit.newWorker.role.password}" />
+                <h:outputText value="Password confirmation" />
+                <p:inputText label="Password"  type="password" required="true" id="pw2"
+                             value="#{workerEdit.passwordSecondTime}" />
+                <h:commandButton id="button"  value="Create Worker" action="#{workerEdit.createWorker}" oncomplete="dlg3.hide()" update=":form:workerList,messages"/>
+            </h:panelGrid>
+            </h:form>
+                </p:dialog>
+            </ui:define>
+            </ui:composition>
+</h:body>
+
+</html>

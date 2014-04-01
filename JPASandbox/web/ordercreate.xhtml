@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: Nazar_Sheremeta
+  Date: 7/4/13
+  Time: 4:47 PM
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Simple JSF Facelets page</title>
+</h:head>
+
+<h:body>
+    <div style="width:600px; margin:0 auto;">
+    <h:form>
+        <h3><h:outputText value="Create an order"/></h3>
+        <h:panelGrid columns="2">
+            <h:outputLabel value="Name:" />
+            <p:inputText value="#{orderBean.name}"
+                         label="Ім'я" title="Name" required="true" >
+            <p:ajax event="blur" update="out1" />
+            </p:inputText>
+            <h:outputLabel value="Surname:" />
+            <p:inputText value="#{orderBean.surname}"
+                         label="Прізвище" title="Прізвище" required="true">
+                <p:ajax event="blur" update="out1" />
+                    </p:inputText>
+
+
+
+            <h:outputLabel value="Identify yourself:" />
+            <p:selectOneListbox id="out1" value="#{orderBean.client}" required="TRUE" converter="ClientConverter">
+                <f:selectItems value="#{orderBean.byNameSurname}" var="type"
+                               itemLabel="#{type.nameClient}" itemValue="#{nameClient}" />
+
+                <p:column>
+                     #{type.nameClient}
+                </p:column>
+            </p:selectOneListbox>
+
+
+            <p:selectOneListbox id="anotherPanel" value="#{orderBean.itemType}" required="TRUE" converter="ItemTypeConverter" var="p">
+                <f:selectItems value="#{orderBean.allItemTypes}" var="type2"
+                               itemLabel="#{type2.name}" itemValue="#{name}" />
+
+                <p:column>
+                    #{type2.name}
+                </p:column>
+            </p:selectOneListbox>
+
+
+                    <br />
+
+
+            <h:outputText value="Urgent work?(40% additional fee)" />
+            <p:selectBooleanButton id="value3" value="#{orderBean.urgent}" onLabel="Yes"
+                                   offLabel="No" onIcon="ui-icon-check" offIcon="ui-icon-close" />
+
+            <h:outputText value="Extra hard cleaning?(50% additional fee)" />
+            <p:selectBooleanButton id="value2" value="#{orderBean.extra}" onLabel="Yes"
+                                   offLabel="No" onIcon="ui-icon-check" offIcon="ui-icon-close" />
+
+
+
+        </h:panelGrid>
+        <h:commandButton value="Створити" action="#{orderBean.testAction}"/>
+    </h:form>
+    </div>
+</h:body>
+
+</html>
